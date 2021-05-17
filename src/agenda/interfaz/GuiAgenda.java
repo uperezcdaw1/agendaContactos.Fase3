@@ -149,8 +149,6 @@ public class GuiAgenda extends Application {
 		btnSalir.setOnAction(e -> salir());
 		panel.getChildren().add(btnSalir);
 		return panel;
-
-		
 	}
 
 	private GridPane crearPanelLetras() {
@@ -205,7 +203,7 @@ public class GuiAgenda extends Application {
 
 	private void exportarPersonales() {
 		// a completar
-
+		
 	}
 
 	/**
@@ -213,7 +211,13 @@ public class GuiAgenda extends Application {
 	 */
 	private void listar() {
 		clear();
-
+		if(!itemImportar.isDisable()) {
+			areaTexto.clear();
+			areaTexto.setText("La agenda no se ha importado aún");
+		} else {
+			areaTexto.clear();
+			areaTexto.setText(agenda.toString());
+		}
 	}
 
 	private void personalesOrdenadosPorFecha() {
