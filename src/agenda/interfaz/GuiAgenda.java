@@ -223,7 +223,7 @@ public class GuiAgenda extends Application {
 			areaTexto.setText("La agenda no se ha importado aún");
 		} else {
 			if (rbtListarTodo.isSelected()) {
-				areaTexto.clear();
+				areaTexto.clear(); 
 				areaTexto.setText(agenda.toString());
 			} else if (rbtListarSoloNumero.isSelected()) {
 				areaTexto.clear();
