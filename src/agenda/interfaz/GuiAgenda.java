@@ -234,23 +234,29 @@ public class GuiAgenda extends Application {
 
 	private void personalesOrdenadosPorFecha() {
 		clear();
-		char letra = 'A';
+		char letra = ' ';
 		String salida = "";
 		AgendaContactos age = new AgendaContactos();
 		List<Personal> contactos =  agenda.personalesOrdenadosPorFechaNacimiento(letra);
 		for(Personal p: contactos) {
 			salida = salida + p.toString() + "\n";
 		}
+		if(salida.equals("")) {
+			salida = "No hay personales con esa letra";
+		}
 		areaTexto.setText(salida);
 	}
 
 	private void contactosPersonalesEnLetra() {
 		clear();
-		char letra = 'A';
-		String salida = " ";
+		char letra = ' ';
+		String salida = "";
 		List<Personal> contactos =  agenda.personalesEnLetra(letra);
 		for(Personal p: contactos) {
 			salida = salida + p.toString() + "\n";
+		}
+		if(salida.equals("")) {
+			salida = "No hay ningun contacto personal la letra";
 		}
 		areaTexto.setText(salida);
 	}
