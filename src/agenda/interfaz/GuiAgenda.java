@@ -1,16 +1,19 @@
 package agenda.interfaz;
 
+import agenda.io.AgendaIO;
 import agenda.modelo.AgendaContactos;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -91,15 +94,45 @@ public class GuiAgenda extends Application {
 	}
 
 	private MenuBar crearBarraMenu() {
-		// a completar
-		MenuBar barra = new MenuBar();
 
+		MenuBar barra = new MenuBar();
+		
+		Menu archivo = new Menu("Archivo");
+		itemImportar = new MenuItem("Importar agenda");
+		itemImportar.setAccelerator(KeyCombination.keyCombination("Ctrl+I"));
+		itemExportarPersonales = new MenuItem("Exportar personales");
+		itemExportarPersonales.setAccelerator(KeyCombination.keyCombination("Ctrl+E"));
+		itemSalir = new MenuItem("Salir");
+		itemSalir.setAccelerator(KeyCombination.keyCombination("Ctrl+S"));
+		archivo.getItems().addAll(itemImportar, itemExportarPersonales, itemSalir);
+		itemSalir.setOnAction(e -> salir());
+		itemExportarPersonales.setOnAction(e -> exportarPersonales());
+		itemExportarPersonales.setDisable(true);
+		itemImportar.setOnAction(e -> importarAgenda());
+		
+		Menu operaciones = new Menu("Operaciones");
+		itemBuscar = new MenuItem("Buscar");
+		itemBuscar.setAccelerator(KeyCombination.keyCombination("Ctrl+B"));
+		itemFelicitar = new MenuItem("Felicitar");
+		itemFelicitar.setAccelerator(KeyCombination.keyCombination("Ctrl+F"));
+		operaciones.getItems().addAll(itemBuscar, itemFelicitar);
+		
+		Menu help = new Menu("Help");
+		itemAbout = new MenuItem("About");
+		itemAbout.setAccelerator(KeyCombination.keyCombination("Ctrl+A"));
+		help.getItems().addAll(itemAbout);
+		
+		barra.getMenus().addAll(archivo,operaciones,help);
+		
 		return barra;
 	}
 
 	private void importarAgenda() {
-		// a completar
-
+		
+		AgendaIO age = new AgendaIO();
+		age.importar(agenda, "agenda.csv");
+		itemImportar.setDisable(true);
+		itemExportarPersonales.setDisable(false);
 	}
 
 	private void exportarPersonales() {
@@ -112,7 +145,7 @@ public class GuiAgenda extends Application {
 	 */
 	private void listar() {
 		clear();
-		// a completar
+
 
 	}
 

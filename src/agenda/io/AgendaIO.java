@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import agenda.modelo.AgendaContactos;
 import agenda.modelo.Contacto;
@@ -26,7 +28,9 @@ public class AgendaIO {
 		int suma = 0;
 		BufferedReader entrada = null;
 		try {
-			entrada = new BufferedReader(new FileReader(ruta));
+			//entrada = new BufferedReader(new FileReader(ruta));
+			InputStream input = AgendaIO.class.getClassLoader().getResourceAsStream(ruta);
+			entrada = new BufferedReader(new InputStreamReader(input));
 			String linea = entrada.readLine();
 			while (linea != null) {
 				Contacto contacto = parsearLinea(linea);
