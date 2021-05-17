@@ -7,18 +7,17 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-<<<<<<< HEAD
 import javafx.scene.input.KeyCombination;
-=======
 import javafx.scene.control.ToggleGroup;
->>>>>>> refs/remotes/origin/master
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -189,6 +188,7 @@ public class GuiAgenda extends Application {
 		itemAbout = new MenuItem("About");
 		itemAbout.setAccelerator(KeyCombination.keyCombination("Ctrl+A"));
 		help.getItems().addAll(itemAbout);
+		itemAbout.setOnAction(e -> about());
 		
 		barra.getMenus().addAll(archivo,operaciones,help);
 		
@@ -213,12 +213,6 @@ public class GuiAgenda extends Application {
 	 */
 	private void listar() {
 		clear();
-<<<<<<< HEAD
-
-=======
-		System.out.println("hola");
-		// a completar
->>>>>>> refs/remotes/origin/master
 
 	}
 
@@ -254,8 +248,17 @@ public class GuiAgenda extends Application {
 	}
 
 	private void about() {
-		// a completar
-
+		
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		DialogPane dialogPane = alert.getDialogPane();
+		
+		dialogPane.setHeaderText(null);
+		dialogPane.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog-pane");
+		
+		alert.setTitle("Alerta de agenda de contactos");
+		alert.setContentText("Mi agenda de contactos");
+		alert.showAndWait();
 	}
 
 	private void clear() {
