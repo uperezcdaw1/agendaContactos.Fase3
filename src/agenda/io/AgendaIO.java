@@ -12,6 +12,7 @@ import agenda.modelo.Contacto;
 import agenda.modelo.Personal;
 import agenda.modelo.Profesional;
 import agenda.modelo.Relacion;
+import agenda.interfaz.GuiAgenda;
 
 /**@author Unai Pérez, Enrique Lafraya, Iñaki Tiraplegui
  * Utilidades para cargar la agenda
