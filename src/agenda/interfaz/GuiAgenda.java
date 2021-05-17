@@ -60,7 +60,7 @@ public class GuiAgenda extends Application {
 		BorderPane panel = new BorderPane();
 		panel.setTop(crearBarraMenu());
 		panel.setCenter(crearPanelPrincipal());
-		return panel;
+		return panel; 
 	}
 
 	private BorderPane crearPanelPrincipal() {
