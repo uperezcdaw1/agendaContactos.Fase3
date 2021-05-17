@@ -95,7 +95,7 @@ public class GuiAgenda extends Application {
 		txtBuscar.setMinSize(250, 40);
 		txtBuscar.setMaxSize(250, 40);
 		panel.setMargin(txtBuscar, new Insets(0, 0, 40, 0));
-		txtBuscar.setOnKeyReleased(e -> buscar());
+		txtBuscar.setOnAction(e -> buscar());
 		panel.getChildren().add(txtBuscar);
 		// Creamos un grupo para seleccionar solo una a la vez
 		ToggleGroup grupo = new ToggleGroup();
@@ -251,10 +251,13 @@ public class GuiAgenda extends Application {
 
 	private void buscar() {
 		clear();
-	
+		if(txtBuscar.getText().equals("")) {
 			areaTexto.clear();
 			areaTexto.setText("No has escrito nada para buscar, intente de nuevo escribiéndo algo");
-		
+		} else {
+			areaTexto.clear();
+
+		}
 
 		cogerFoco();
 
