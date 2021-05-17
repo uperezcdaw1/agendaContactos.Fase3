@@ -1,7 +1,10 @@
 package agenda.interfaz;
 
+import java.util.List;
+
 import agenda.io.AgendaIO;
 import agenda.modelo.AgendaContactos;
+import agenda.modelo.Personal;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -179,8 +182,10 @@ public class GuiAgenda extends Application {
 		Menu operaciones = new Menu("Operaciones");
 		itemBuscar = new MenuItem("Buscar");
 		itemBuscar.setAccelerator(KeyCombination.keyCombination("Ctrl+B"));
+		itemBuscar.setOnAction(e -> buscar());
 		itemFelicitar = new MenuItem("Felicitar");
 		itemFelicitar.setAccelerator(KeyCombination.keyCombination("Ctrl+F"));
+		itemFelicitar.setOnAction(e -> felicitar());
 		operaciones.getItems().addAll(itemBuscar, itemFelicitar);
 
 		Menu help = new Menu("Help");
@@ -203,8 +208,9 @@ public class GuiAgenda extends Application {
 	}
 
 	private void exportarPersonales() {
-		// a completar
-
+		AgendaIO age = new AgendaIO();
+		age.exportarPersonales(agenda, "agenda.csv");
+		itemExportarPersonales.setDisable(false);
 	}
 
 	/**
@@ -228,25 +234,44 @@ public class GuiAgenda extends Application {
 
 	private void personalesOrdenadosPorFecha() {
 		clear();
-		// a completar
-
+		char letra = 'A';
+		String salida = "";
+		AgendaContactos age = new AgendaContactos();
+		List<Personal> contactos =  agenda.personalesOrdenadosPorFechaNacimiento(letra);
+		for(Personal p: contactos) {
+			salida = salida + p.toString() + "\n";
+		}
+		areaTexto.setText(salida);
 	}
 
 	private void contactosPersonalesEnLetra() {
 		clear();
-		// a completar
-
+		char letra = 'A';
+		String salida = " ";
+		List<Personal> contactos =  agenda.personalesEnLetra(letra);
+		for(Personal p: contactos) {
+			salida = salida + p.toString() + "\n";
+		}
+		areaTexto.setText(salida);
 	}
 
 	private void contactosEnLetra(char letra) {
 		clear();
-		// a completar
+		String salida = "" + agenda.contactosEnLetra(letra);
+		areaTexto.setText("Hay " + salida + " contactos en la letra " + letra);
 	}
 
 	private void felicitar() {
 		clear();
-		// a completar
-
+		String salida = "";
+		List<Personal> contactos =  agenda.felicitar();
+		for(Personal p: contactos) {
+			salida = salida + p.toString() + "\n";
+		}
+		if(salida.equals("")) {
+			salida = "No hay ningun contacto que cumpla hoy";
+		}
+		areaTexto.setText(salida);
 	}
 
 	private void buscar() {
