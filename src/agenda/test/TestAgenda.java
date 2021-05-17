@@ -8,6 +8,7 @@ import agenda.modelo.Contacto;
 import agenda.modelo.Personal;
 import agenda.modelo.Relacion;
 import agenda.io.AgendaIO;
+import agenda.interfaz.GuiAgenda;
 
 import java.util.List;
 

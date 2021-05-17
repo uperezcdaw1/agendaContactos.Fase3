@@ -6,6 +6,7 @@ import agenda.modelo.Contacto;
 import agenda.modelo.Personal;
 import agenda.modelo.Profesional;
 import agenda.modelo.Relacion;
+import agenda.interfaz.GuiAgenda;
 
 public class TestProfesionalPersonal {
 
