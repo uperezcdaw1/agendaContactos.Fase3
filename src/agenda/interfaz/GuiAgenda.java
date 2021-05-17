@@ -90,11 +90,12 @@ public class GuiAgenda extends Application {
 		panel.setPadding(new Insets(10));
 		panel.setSpacing(10);
 		// Introducimos el area de texto
-		TextField text = new TextField("Buscar...");
-		text.setMinSize(250, 40);
-		text.setMaxSize(250, 40);
-		panel.setMargin(text, new Insets(0, 0, 40, 0));
-		panel.getChildren().add(text);
+		txtBuscar = new TextField();
+		txtBuscar.setPromptText("Buscar...");
+		txtBuscar.setMinSize(250, 40);
+		txtBuscar.setMaxSize(250, 40);
+		panel.setMargin(txtBuscar, new Insets(0, 0, 40, 0));
+		panel.getChildren().add(txtBuscar);
 		// Creamos un grupo para seleccionar solo una a la vez
 		ToggleGroup grupo = new ToggleGroup();
 		// Primer boton circular para opcion
