@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import agenda.io.AgendaIO;
 import agenda.modelo.AgendaContactos;
+import agenda.modelo.Contacto;
 import agenda.modelo.Personal;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -317,12 +318,19 @@ public class GuiAgenda extends Application {
 
 	private void buscar() {
 		clear();
+		String salida = "";
+		txtBuscar.getText().toUpperCase();
 		if (txtBuscar.getText().equals("")) {
 			areaTexto.clear();
 			areaTexto.setText("No has escrito nada para buscar, intente de nuevo escribiéndo algo");
 		} else {
 			areaTexto.clear();
-
+			agenda.buscarContactos(txtBuscar.getText());
+			List<Contacto> contactos = agenda.buscarContactos(txtBuscar.getText());
+			for(Contacto c : contactos) {
+				salida += c.toString() + "\n";
+			}
+			areaTexto.setText(salida);
 		}
 
 		cogerFoco();
