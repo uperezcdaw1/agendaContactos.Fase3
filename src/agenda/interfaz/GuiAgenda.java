@@ -258,7 +258,7 @@ public class GuiAgenda extends Application {
 					salida = "No hay personales con esa letra";
 				}
 				areaTexto.setText(salida);
-			} else {
+			} else { 
 				dialogo.close();
 			}
 		} else {
