@@ -1,6 +1,8 @@
 package agenda.interfaz;
 
+import java.awt.Dialog;
 import java.util.List;
+import java.util.Optional;
 
 import agenda.io.AgendaIO;
 import agenda.modelo.AgendaContactos;
@@ -12,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -234,31 +237,43 @@ public class GuiAgenda extends Application {
 
 	private void personalesOrdenadosPorFecha() {
 		clear();
-		char letra = ' ';
+		ChoiceDialog<Character> dialogo = new ChoiceDialog<Character>('A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+		dialogo.setTitle("PERSONALES ORDENADOS POR FECHA DE NACIMIENTO");
+		dialogo.setHeaderText("Elija una letra");
+		dialogo.setContentText(null);
+		Optional<Character> resul = dialogo.showAndWait();
+		if(resul.isPresent()) {
 		String salida = "";
 		AgendaContactos age = new AgendaContactos();
-		List<Personal> contactos =  agenda.personalesOrdenadosPorFechaNacimiento(letra);
+		List<Personal> contactos =  agenda.personalesOrdenadosPorFechaNacimiento(resul.get());
 		for(Personal p: contactos) {
 			salida = salida + p.toString() + "\n";
 		}
 		if(salida.equals("")) {
 			salida = "No hay personales con esa letra";
 		}
-		areaTexto.setText(salida);
+		areaTexto.setText(salida);}
+		else {dialogo.close();}
 	}
 
 	private void contactosPersonalesEnLetra() {
 		clear();
-		char letra = ' ';
+		ChoiceDialog<Character> dialogo = new ChoiceDialog<Character>('A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+		dialogo.setTitle("CONTACTOS PERSONALES EN LETRA");
+		dialogo.setHeaderText("Elija una letra");
+		dialogo.setContentText(null);
+		Optional<Character> resul = dialogo.showAndWait();
+		if(resul.isPresent()) {
 		String salida = "";
-		List<Personal> contactos =  agenda.personalesEnLetra(letra);
+		List<Personal> contactos =  agenda.personalesEnLetra(resul.get());
 		for(Personal p: contactos) {
 			salida = salida + p.toString() + "\n";
 		}
 		if(salida.equals("")) {
 			salida = "No hay ningun contacto personal la letra";
 		}
-		areaTexto.setText(salida);
+		areaTexto.setText(salida);}
+		else {dialogo.close();}
 	}
 
 	private void contactosEnLetra(char letra) {
