@@ -318,6 +318,7 @@ public class GuiAgenda extends Application {
 
 	private void buscar() {
 		clear();
+		if(itemImportar.isDisable()) {
 		String salida = "";
 		txtBuscar.getText().toUpperCase();
 		if (txtBuscar.getText().equals("")) {
@@ -331,12 +332,15 @@ public class GuiAgenda extends Application {
 				salida += c.toString() + "\n";
 			}
 			areaTexto.setText(salida);
+			areaTexto.appendText("Se han encontrado " + contactos.size() + " contactos que contienen: "+ "'" + txtBuscar.getText() + "'");
 			if(salida.equals("")) {
 				areaTexto.setText("No se ha encontrado nada que contenga: " + "'" + txtBuscar.getText() + "'");
 			}
+		} 
+		}else {
+			areaTexto.setText("No se ha importado la agenda aun");		
 		}
 		cogerFoco();
-
 	}
 
 	private void about() {
