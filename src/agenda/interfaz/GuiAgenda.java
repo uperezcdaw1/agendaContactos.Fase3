@@ -331,8 +331,10 @@ public class GuiAgenda extends Application {
 				salida += c.toString() + "\n";
 			}
 			areaTexto.setText(salida);
+			if(salida.equals("")) {
+				areaTexto.setText("No se ha encontrado nada que contenga: " + "'" + txtBuscar.getText() + "'");
+			}
 		}
-
 		cogerFoco();
 
 	}
