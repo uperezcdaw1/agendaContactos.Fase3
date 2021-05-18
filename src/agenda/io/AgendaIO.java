@@ -18,15 +18,14 @@ import agenda.interfaz.GuiAgenda;
  * Utilidades para cargar la agenda
  */
 public class AgendaIO {
+	private static int errores=0;
 	/**
 	 * Método que al meter como @param una agenda, importa los datos predefinidos de
 	 * esta. A su vez, introducimos la ruta del archivo txt que deseamos importar para coger sus datos.
 	 * @return Devuelve un número entero con la cantidad de fallos originados a la hora de importar "X" líneas de datos
 	 * 
 	 */
-	public static int importar(AgendaContactos agenda, String ruta) {
-		int contador = 0;  
-		int suma = 0;
+	public static int importar(AgendaContactos agenda, String ruta) { 
 		BufferedReader entrada = null;
 		try {
 			//entrada = new BufferedReader(new FileReader(ruta));
@@ -44,8 +43,7 @@ public class AgendaIO {
 				linea = entrada.readLine();
 			}
 		} catch (IOException e) {
-			contador++;
-			suma += contador;
+			sumaErrores(1);
 			System.out.println("Error al leer " + ruta);
 		} catch (NullPointerException e) {
 			System.out.println("Documento vacío");
@@ -54,18 +52,17 @@ public class AgendaIO {
 				try {
 					entrada.close();
 				} catch (NullPointerException e) {
-					contador++;
-					suma += contador;
+					sumaErrores(1);
 					System.out.println(e.getMessage());
 				} catch (IOException e) {
-					contador++;
-					suma += contador;
+					sumaErrores(1);
 					System.out.println(e.getMessage());
 				} 
 			}
 		}
 		System.out.println(); //System out decorativo a la hora de sacar los datos en la consola.
-		return suma;
+		System.out.println(errores + " errores");
+		return errores;
 	}
 
 	/**
@@ -101,6 +98,7 @@ public class AgendaIO {
 				return con;
 			}
 		} catch (Exception e) {
+			sumaErrores(1);
 			System.out.println("Error con un campo del contacto");
 		}
 		
@@ -139,6 +137,7 @@ public class AgendaIO {
 				return con;
 			}
 		} catch (Exception e) {
+			sumaErrores(1);
 			System.out.println("Error con un campo del contacto");
 		}
 		
@@ -179,15 +178,22 @@ public class AgendaIO {
                 dato="" + print;}
             salida.write(dato);
         } catch (IOException e) {
+        	sumaErrores(1);
             e.printStackTrace(System.err);
         } finally {
             try {
                 salida.close();
             } catch (IOException e) {
+            	sumaErrores(1);
                 System.out.println("No se puede cerrar");
             }
         }
-
     }
+	private static void sumaErrores(int num) {
+		errores = errores + num;
+	}
+	public int errores() {
+		return errores;
+	}
 }
 

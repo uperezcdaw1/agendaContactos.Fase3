@@ -206,6 +206,7 @@ public class GuiAgenda extends Application {
 
 		AgendaIO age = new AgendaIO();
 		age.importar(agenda, "agenda.csv");
+		areaTexto.setText(age.errores() +" errores a la hora de importar");
 		itemImportar.setDisable(true);
 		itemExportarPersonales.setDisable(false);
 	}
@@ -227,7 +228,7 @@ public class GuiAgenda extends Application {
 		} else {
 			if (rbtListarTodo.isSelected()) {
 				areaTexto.clear(); 
-				areaTexto.setText(agenda.toString());
+				areaTexto.setText("\n" + agenda.toString());
 			} else if (rbtListarSoloNumero.isSelected()) {
 				areaTexto.clear();
 				areaTexto.setText("La agenda tiene un total de " + agenda.totalContactos() + " contactos");
