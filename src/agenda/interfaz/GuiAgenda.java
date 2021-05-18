@@ -238,6 +238,7 @@ public class GuiAgenda extends Application {
 
 	private void personalesOrdenadosPorFecha() {
 		clear();
+		if(itemImportar.isDisable()) {
 		ChoiceDialog<Character> dialogo = new ChoiceDialog<Character>('A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z');
 		dialogo.setTitle("PERSONALES ORDENADOS POR FECHA DE NACIMIENTO");
 		dialogo.setHeaderText("Elija una letra");
@@ -254,11 +255,12 @@ public class GuiAgenda extends Application {
 			salida = "No hay personales con esa letra";
 		}
 		areaTexto.setText(salida);}
-		else {dialogo.close();}
+		else {dialogo.close();}} else {areaTexto.setText("La agenda no se ha importado aun");}
 	}
 
 	private void contactosPersonalesEnLetra() {
 		clear();
+		if(itemImportar.isDisable()) {
 		ChoiceDialog<Character> dialogo = new ChoiceDialog<Character>('A','B','C','D','E','F','G','H','I','J','K','L','M','N','Ñ','O','P','Q','R','S','T','U','V','W','X','Y','Z');
 		dialogo.setTitle("CONTACTOS PERSONALES EN LETRA");
 		dialogo.setHeaderText("Elija una letra");
@@ -274,7 +276,7 @@ public class GuiAgenda extends Application {
 			salida = "No hay ningun contacto personal la letra";
 		}
 		areaTexto.setText(salida);}
-		else {dialogo.close();}
+		else {dialogo.close();}}else {areaTexto.setText("La agenda no se ha importado aun");}
 	}
 
 	private void contactosEnLetra(char letra) {
@@ -285,6 +287,7 @@ public class GuiAgenda extends Application {
 
 	private void felicitar() {
 		clear();
+		if(itemImportar.isDisable()) {
 		String salida = "";
 		List<Personal> contactos =  agenda.felicitar();
 		for(Personal p: contactos) {
@@ -293,7 +296,7 @@ public class GuiAgenda extends Application {
 		if(salida.equals("")) {
 			salida = "No hay ningun contacto que cumpla hoy";
 		}
-		areaTexto.setText(salida);
+		areaTexto.setText(salida);}else {areaTexto.setText("La agenda no se ha importado aun");}
 	}
 
 	private void buscar() {
