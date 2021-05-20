@@ -163,7 +163,10 @@ public class GuiAgenda extends Application {
 		return panel;
 	}
 
-	
+	/**
+	 * Método que nos devolverá un Panel con botones de la (a - Z)
+	 * @return Devuelve el panel con los botones.
+	 */
 		private GridPane crearPanelLetras() {
 			char[] botones = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I','J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 			GridPane panel = new GridPane();
@@ -318,7 +321,11 @@ public class GuiAgenda extends Application {
 			areaTexto.setText("La agenda no se ha importado aun");
 		}
 	}
-
+	/**
+	 * Método que saca por pantalla una lista con los contactos que tiene una letra
+	 * @param Introducimos un carácter 
+	 * 
+	 */
 	private void contactosEnLetra(char letra) {
 		clear();
 		String salida = "";

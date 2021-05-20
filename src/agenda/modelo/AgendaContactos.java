@@ -64,7 +64,11 @@ public class AgendaContactos {
 		}
 		return contador;
 	}
-	
+	/**
+	 * Método que nos devolverá el número de contactos que tiene una letra
+	 * @param Introducimos un carácter 
+	 * @return Devuelve un set con los contactos de dicha letra
+	 */
 	public Set<Contacto> contactosEnLetra2(char letra) {
 		return agenda.get(letra);
 	}
