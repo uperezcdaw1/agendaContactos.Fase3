@@ -30,10 +30,21 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
+/**
+ * Clase GuiAgenda que nos permite crear nuestra aplicación desarrollada con JavaFx. Se trata de una agenda de contactos
+ * los cuales pueden ser o bien Personales o bien Profesionales. Dicha agenda tendrá muchas funciones como listarla,
+ * felicitar a un contacto, exportar los contactos personales a un archivo de formato txt, etc.
+ * @author Unai Pérez
+ * @author Enrique Lafraya
+ * @author Iñaki Tiraplegui
+ *
+ */
 public class GuiAgenda extends Application {
 	private AgendaContactos agenda;
 	private MenuItem itemImportar;
@@ -58,7 +69,7 @@ public class GuiAgenda extends Application {
 
 	private Button btnClear;
 	private Button btnSalir;
-
+	
 	@Override
 	public void start(Stage stage) {
 		agenda = new AgendaContactos(); // el modelo
@@ -72,7 +83,12 @@ public class GuiAgenda extends Application {
 		stage.show();
 
 	}
-
+	
+	/**
+	 * Método que creará la parte gráfica de nuestra aplicación, por completo. Eso sí, con ayuda de los demás métodos
+	 * de creación de interfaces gráficas.
+	 * @return Devuelve un objeto BorderPane.
+	 */
 	private BorderPane crearGui() {
 		BorderPane panel = new BorderPane();
 		panel.setTop(crearBarraMenu());
@@ -80,6 +96,11 @@ public class GuiAgenda extends Application {
 		return panel;
 	}
 
+	/**
+	 * Método que creará la parte gráfica de nuestra aplicación. Eso sí, con ayuda de los demás métodos
+	 * de creación de interfaces gráficas.
+	 * @return Devuelve un objeto de tipo BorderPane.
+	 */
 	private BorderPane crearPanelPrincipal() {
 		BorderPane panel = new BorderPane();
 		panel.setPadding(new Insets(10));
@@ -93,6 +114,10 @@ public class GuiAgenda extends Application {
 		return panel;
 	}
 
+	/**
+	 * Método que crea el panel izquierdo de botones los cuales permitiran usar las funciones de nuestra agenda
+	 * @return Devuelve un VBox
+	 */
 	private VBox crearPanelBotones() {
 		// a completar
 		VBox panel = new VBox();
@@ -170,12 +195,14 @@ public class GuiAgenda extends Application {
 		private GridPane crearPanelLetras() {
 			char[] botones = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I','J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 			GridPane panel = new GridPane();
+			GridPane.setHgrow(panel, Priority.ALWAYS);
+			panel.setAlignment(Pos.CENTER);
 			panel.setHgap(5);
 			panel.setVgap(5);
 			panel.setPadding(new Insets(10));
 			int i = 0;
 			int j = 0;
-			for(i = 0; i < botones.length; ++i) {
+			for(i = 0; i < botones.length; ++i) { 
 				char tempo = botones[i];
 				Button boton = new Button(Character.toString(tempo));
 				boton.setOnAction(e -> contactosEnLetra(tempo));
@@ -186,13 +213,16 @@ public class GuiAgenda extends Application {
 					j++;
 				}else {
 					panel.add(boton,i,0);
-				}
-				
+				}			
 			}
-
 			return panel;
 		}
 
+	/**
+	 * Método que creará el panel de opciones de la parte superior de nuestra aplicación. Cada opción, tendrá 
+	 * una función en específica. A su vez, dichas opciones tienen atajos con el teclado.
+	 * @return Devuelve un objeto MenuBar
+	 */
 	private MenuBar crearBarraMenu() {
 
 		MenuBar barra = new MenuBar();
@@ -230,6 +260,9 @@ public class GuiAgenda extends Application {
 		return barra;
 	}
 
+	/**
+	 * Método que importará un archivo el cual elijamos en nuestro explorador de archivos del ordenador.
+	 */
 	private void importarAgenda() {
 		Stage ventana = new Stage();
 		AgendaIO age = new AgendaIO();
@@ -241,15 +274,24 @@ public class GuiAgenda extends Application {
 		itemExportarPersonales.setDisable(false);
 	}
 
+	/**
+	 * Método que imprimirá los contactos personales de la agenda, en un fichero de texto que elijamos.
+	 */
 	private void exportarPersonales() {
 		AgendaIO age = new AgendaIO();
-		age.exportarPersonales(agenda, "prueba.txt");
+		Stage ventana = new Stage();
+		FileChooser file = new FileChooser();
+		ExtensionFilter filtro = new ExtensionFilter("TXT", "*.txt");
+		file.getExtensionFilters().add(filtro);
+		File arch = file.showSaveDialog(ventana);
+		age.exportarPersonales(agenda, arch.toString());
 		areaTexto.setText("Se han exportado los contactos personales con éxito");
 		itemExportarPersonales.setDisable(false);
 	}
 
 	/**
-	 *  
+	 *  Método que sacará por pantalla la lista completa de los contactos de la agenda. En caso de no haber sido
+	 *  importada dicha agenda, nos enseñará un mensaje para advertirnos.
 	 */
 	private void listar() {
 		clear();
@@ -267,6 +309,9 @@ public class GuiAgenda extends Application {
 		}
 	}
 
+	/**
+	 * Método que ordenará los contactos de una letra escogida por orden de fecha de nacimiento.
+	 */
 	private void personalesOrdenadosPorFecha() {
 		clear();
 		if (itemImportar.isDisable()) {
@@ -295,6 +340,10 @@ public class GuiAgenda extends Application {
 		}
 	}
 
+	/**
+	 * Método que dependiendo que letra escojamos, nos mostrará en pantalla que contactos PERSONALES
+	 * contiene dicha letra.
+	 */
 	private void contactosPersonalesEnLetra() {
 		clear();
 		if (itemImportar.isDisable()) {
@@ -311,7 +360,7 @@ public class GuiAgenda extends Application {
 					salida = salida + p.toString() + "\n";
 				}
 				if (salida.equals("")) {
-					salida = "No hay ningun contacto personal la letra";
+					salida = "No hay ningun contacto personal la letra " + resul.get();
 				}
 				areaTexto.setText(salida);
 			} else {
@@ -343,6 +392,9 @@ public class GuiAgenda extends Application {
 		areaTexto.setText(salida);
 	}
 
+	/**
+	 * Método el cual felicitará a una persona de la agenda en caso de coincidir su fecha de cumpleaños con la fecha actual.
+	 */
 	private void felicitar() {
 		clear();
 		if (itemImportar.isDisable()) {
@@ -360,6 +412,10 @@ public class GuiAgenda extends Application {
 		}
 	}
 
+	/**
+	 * Método que a través de una barra de búsqueda, podemos encontrar los contactos cuyo apellido contenga
+	 * el texto que recién hemos introducido en dicha barra.
+	 */
 	private void buscar() {
 		clear();
 		if(itemImportar.isDisable()) {
@@ -387,6 +443,9 @@ public class GuiAgenda extends Application {
 		cogerFoco();
 	}
 
+	/**
+	 * Método que nos muestra un mensaje de alarma el cual nos muestra una ilustración sobre la información de nuestra agenda.
+	 */
 	private void about() {
 
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -401,10 +460,16 @@ public class GuiAgenda extends Application {
 		alert.showAndWait();
 	}
 
+	/**
+	 * Método para resetear el contenido del area de texto de la agenda de contactos.
+	 */
 	private void clear() {
 		areaTexto.setText("");
 	}
 
+	/**
+	 * Método usado para salir de la aplicación.
+	 */
 	private void salir() {
 		Platform.exit();
 	}
@@ -412,9 +477,12 @@ public class GuiAgenda extends Application {
 	private void cogerFoco() {
 		txtBuscar.requestFocus();
 		txtBuscar.selectAll();
-
 	}
 
+	/**
+	 * Método de prueba de la aplicación.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
