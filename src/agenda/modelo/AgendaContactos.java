@@ -64,6 +64,11 @@ public class AgendaContactos {
 		}
 		return contador;
 	}
+	
+	public Set<Contacto> contactosEnLetra2(char letra) {
+		return agenda.get(letra);
+	}
+	
 
 	/**
 	 * Método que nos devolverá el número de contactos de la agenda

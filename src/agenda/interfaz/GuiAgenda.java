@@ -1,8 +1,11 @@
 package agenda.interfaz;
 
 import java.awt.Dialog;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 import agenda.io.AgendaIO;
 import agenda.modelo.AgendaContactos;
@@ -28,6 +31,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class GuiAgenda extends Application {
@@ -159,12 +163,32 @@ public class GuiAgenda extends Application {
 		return panel;
 	}
 
-	private GridPane crearPanelLetras() {
-		// a completar
-		GridPane panel = new GridPane();
+	
+		private GridPane crearPanelLetras() {
+			char[] botones = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I','J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+			GridPane panel = new GridPane();
+			panel.setHgap(5);
+			panel.setVgap(5);
+			panel.setPadding(new Insets(10));
+			int i = 0;
+			int j = 0;
+			for(i = 0; i < botones.length; ++i) {
+				char tempo = botones[i];
+				Button boton = new Button(Character.toString(tempo));
+				boton.setOnAction(e -> contactosEnLetra(tempo));
+				boton.getStyleClass().add("botonletra");
+				boton.setMinSize(70, 40);
+				if(i > 13) {
+					panel.add(boton,j,1);
+					j++;
+				}else {
+					panel.add(boton,i,0);
+				}
+				
+			}
 
-		return panel;
-	}
+			return panel;
+		}
 
 	private MenuBar crearBarraMenu() {
 
@@ -204,9 +228,11 @@ public class GuiAgenda extends Application {
 	}
 
 	private void importarAgenda() {
-
+		Stage ventana = new Stage();
 		AgendaIO age = new AgendaIO();
-		age.importar(agenda, "agenda.csv");
+		FileChooser file = new FileChooser();
+		File arch = file.showOpenDialog(ventana);
+		age.importar(agenda, arch.getName());
 		areaTexto.setText(age.errores() + " errores a la hora de importar");
 		itemImportar.setDisable(true);
 		itemExportarPersonales.setDisable(false);
@@ -295,8 +321,19 @@ public class GuiAgenda extends Application {
 
 	private void contactosEnLetra(char letra) {
 		clear();
-		String salida = "" + agenda.contactosEnLetra(letra);
-		areaTexto.setText("Hay " + salida + " contactos en la letra " + letra);
+		String salida = "";
+		if(itemImportar.isDisable()) {
+			if (agenda.contactosEnLetra2(letra) == null) {
+				salida = "No Hay Contactos que comiencen con la " + letra;
+			}else {
+				for(Contacto contacto: agenda.contactosEnLetra2(letra))
+				salida += contacto.toString() + "\n";
+			}
+			areaTexto.setText(letra + "\n" + salida);
+		} else {
+			salida = "No has importado la agenda";
+		}
+		areaTexto.setText(salida);
 	}
 
 	private void felicitar() {
